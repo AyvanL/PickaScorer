@@ -11,12 +11,28 @@ export default function SignUp() {
   const [success, setSuccess] = useState(false)
   const navigate = useNavigate()
 
+  async function createInitialMatchRow(userEmail: string) {
+    const { error: rowError } = await supabase.from('matches').insert([
+      {
+        user_id: userEmail,
+        team1_score: 11,
+        team2_score: 9,
+        server_number: 1,
+        serving_team: 1,
+      },
+    ])
+
+    if (rowError) {
+      throw new Error(rowError.message)
+    }
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setLoading(true)
     setError('')
 
-    const { error: authError } = await supabase.auth.signUp({
+    const { data, error: authError } = await supabase.auth.signUp({
       email,
       password,
     })
@@ -25,7 +41,15 @@ export default function SignUp() {
       setError(authError.message)
       setLoading(false)
     } else {
-      setSuccess(true)
+      const signedUpEmail = data.user?.email ?? email
+
+      try {
+        await createInitialMatchRow(signedUpEmail)
+        setSuccess(true)
+      } catch (rowError) {
+        setError(rowError instanceof Error ? rowError.message : 'Failed to create initial match row.')
+      }
+
       setLoading(false)
     }
   }
