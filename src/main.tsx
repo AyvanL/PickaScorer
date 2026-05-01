@@ -8,18 +8,19 @@ import Login from './pages/Login'
 import Homepage from './pages/Homepage'
 import Remote from './pages/Remote'
 import Display from './pages/Display'
+import ProtectedRoute from './ProtectedRoute'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />}>
-            <Route index element={<Navigate to="/login" replace />} />
+          <Route index element={<Navigate to="/login" replace />} />
           <Route path="signup" element={<SignUp />} />
           <Route path="login" element={<Login />} />
-          <Route path="dashboard" element={<Homepage />} />
-          <Route path="remote" element={<Remote />} />
-          <Route path="display" element={<Display />} />
+          <Route path="dashboard" element={<ProtectedRoute><Homepage /></ProtectedRoute>} />
+          <Route path="remote" element={<ProtectedRoute><Remote /></ProtectedRoute>} />
+          <Route path="display" element={<ProtectedRoute><Display /></ProtectedRoute>} />
         </Route>
       </Routes>
     </BrowserRouter>
