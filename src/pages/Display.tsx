@@ -9,7 +9,6 @@ export default function Display() {
   const [serverNumber, setServerNumber] = useState(1)
   const [servingTeam, setServingTeam] = useState<1 | 2>(1)
   const [userEmail, setUserEmail] = useState('')
-  const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -18,7 +17,6 @@ export default function Display() {
 
       if (userError || !userData.user?.email) {
         console.error('Failed to get user email')
-        setLoading(false)
         return
       }
 
@@ -37,8 +35,6 @@ export default function Display() {
         setServerNumber(matchData.server_number)
         setServingTeam(matchData.serving_team)
       }
-
-      setLoading(false)
     }
 
     void loadUserAndScores()
