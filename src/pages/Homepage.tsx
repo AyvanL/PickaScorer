@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../supabaseClient'
 import '../dashboard.css'
+import pickleBG from '../assets/pickleBG.png'
 
 export default function Homepage() {
   const navigate = useNavigate()
@@ -23,7 +24,14 @@ export default function Homepage() {
   }
 
   return (
-    <div className="dashboard-shell">
+    <div
+      className="dashboard-shell"
+      style={{
+        backgroundImage: `linear-gradient(180deg, rgba(10,10,10,0.98), rgba(15,15,15,0.96)), url(${pickleBG})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
       {/* Header with logout */}
       <div className="dashboard-header">
         <div className="brand-row brand-header">
@@ -45,13 +53,13 @@ export default function Homepage() {
 
         <div className="button-grid-full">
           <button onClick={() => navigate('/display')} className="dashboard-btn display-btn">
-            <div className="btn-icon">📊</div>
+            <div className="btn-icon">🖥️</div>
             <div className="btn-title">Display</div>
             <div className="btn-desc">View full-screen scoreboard</div>
           </button>
 
           <button onClick={() => navigate('/remote')} className="dashboard-btn remote-btn">
-            <div className="btn-icon">🎮</div>
+            <div className="btn-icon">🕹️</div>
             <div className="btn-title">Remote</div>
             <div className="btn-desc">Control match scoring</div>
           </button>

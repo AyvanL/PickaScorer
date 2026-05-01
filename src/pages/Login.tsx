@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate, Link, useLocation } from 'react-router-dom'
 import { supabase } from '../supabaseClient'
 import '../auth.css'
+import pickleBG from '../assets/pickleBG.png'
 
 export default function Login() {
   const [email, setEmail] = useState('')
@@ -38,7 +39,14 @@ export default function Login() {
   }
 
   return (
-    <div className="auth-shell">
+    <div
+      className="auth-shell"
+      style={{
+        backgroundImage: `linear-gradient(180deg, rgba(10,10,10,0.98), rgba(15,15,15,0.96)), url(${pickleBG})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
       <div className="auth-card">
         <div className="brand-row">
           <div className="logo-bubble">P</div>

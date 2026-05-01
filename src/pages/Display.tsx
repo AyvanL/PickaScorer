@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../supabaseClient'
 import '../display.css'
+import pickleBG from '../assets/pickleBG.png'
 
 export default function Display() {
   const [team1Score, setTeam1Score] = useState(0)
@@ -91,7 +92,14 @@ export default function Display() {
   }, [])
 
   return (
-    <div className="display-wrapper">
+    <div
+      className="display-wrapper"
+      style={{
+        backgroundImage: `linear-gradient(180deg, rgba(10,10,10,0.98), rgba(15,15,15,0.96)), url(${pickleBG})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
       <button className="fullscreen-button" onClick={handleFullscreen} title={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}>
         {isFullscreen ? '⛶' : '⛶'}
       </button>
