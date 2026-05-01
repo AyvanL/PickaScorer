@@ -35,7 +35,8 @@ body {
 .fullscreen-button {
   position: absolute;
   top: 20px;
-  left: 20px;
+  right: 70px;
+  left: auto;
   z-index: 102;
   background: rgba(153, 204, 51, 0.1);
   border: 1px solid rgba(153, 204, 51, 0.3);
@@ -67,7 +68,7 @@ body {
 .back-button {
   position: absolute;
   top: 20px;
-  left: 70px;
+  left: 20px;
   z-index: 101;
   background: rgba(153, 204, 51, 0.1);
   border: 1px solid rgba(153, 204, 51, 0.3);

@@ -15,8 +15,8 @@ export default function SignUp() {
     const { error: rowError } = await supabase.from('matches').insert([
       {
         user_id: userEmail,
-        team1_score: 11,
-        team2_score: 9,
+        team1_score: 0,
+        team2_score: 0,
         server_number: 1,
         serving_team: 1,
       },
