@@ -191,7 +191,7 @@
   background: radial-gradient(1000px 600px at 10% 10%, rgba(153,204,51,0.04), transparent 10%), linear-gradient(180deg, var(--neutral), rgba(0,0,0,0.06));
   color: var(--text);
 }
-.site-main { flex:1; padding: clamp(16px, 4vw, 32px); display:flex; align-items:center; justify-content:center }
+.site-main { flex:1; padding: clamp(16px, 4vw, 32px); display:flex; align-items:center; justify-content:center; overflow: hidden }
 .site-footer { padding: 14px 24px; border-top: 1px solid var(--border); text-align:center }
 
 /* small utility */

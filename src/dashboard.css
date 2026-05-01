@@ -5,6 +5,8 @@
   align-items: center;
   justify-content: center;
   padding: 24px;
+  flex-direction: column;
+  gap: 40px;
 }
 
 .dashboard-card {
@@ -31,8 +33,15 @@
   margin-top: 24px;
 }
 
+.button-grid-full {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  max-width: 900px;
+}
+
 .dashboard-btn {
-  padding: 20px;
+  padding: 40px;
   border-radius: 12px;
   border: 1px solid rgba(255,255,255,0.03);
   background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
@@ -41,29 +50,30 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
   transition: all 200ms;
+  min-height: 240px;
 }
 
 .dashboard-btn:hover {
   background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
   border-color: rgba(255,255,255,0.06);
-  transform: translateY(-2px);
+  transform: translateY(-4px);
 }
 
 .btn-icon {
-  font-size: 36px;
+  font-size: 56px;
 }
 
 .btn-title {
   color: #fff;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 20px;
 }
 
 .btn-desc {
   color: #9a9a9a;
-  font-size: 12px;
+  font-size: 14px;
   text-align: center;
 }
 
@@ -71,4 +81,7 @@
   .dashboard-card { padding: 20px; width: 100% }
   .dashboard-title { font-size: 22px }
   .button-grid { grid-template-columns: 1fr; gap: 12px }
+  .dashboard-btn { padding: 30px; min-height: 200px }
+  .btn-icon { font-size: 40px }
+  .btn-title { font-size: 16px }
 }
