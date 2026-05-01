@@ -6,6 +6,7 @@ import '../auth.css'
 export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const navigate = useNavigate()
@@ -57,17 +58,28 @@ export default function Login() {
           </div>
 
           <div>
-            <div className="field-label">password <span style={{float:'right'}} className="forgot"><Link to="#">Forgot access?</Link></span></div>
+            <div className="field-label">password</div>
             <div className="input-wrap">
-              <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="••••••••" required disabled={loading} />
+              <input value={password} onChange={(e) => setPassword(e.target.value)} type={showPassword ? 'text' : 'password'} placeholder="••••••••" required disabled={loading} />
+              <button type="button" aria-label={showPassword ? 'Hide password' : 'Show password'} className="password-toggle" onClick={() => setShowPassword((s) => !s)}>
+                {showPassword ? (
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 3l18 18" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/><path d="M10.58 10.58a3 3 0 0 0 4.24 4.24" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                ) : (
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/><circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                )}
+              </button>
             </div>
           </div>
-
+        
           <div className="inline-row">
             <label className="remember"><input type="checkbox" disabled={loading} /> Remember this session</label>
           </div>
 
           <button className="btn primary" type="submit" disabled={loading}>{loading ? 'Logging in...' : 'Login'}</button>
+
+          <div style={{marginTop:12, textAlign:'center'}}>
+            <Link to="#" className="muted-link">Forgot access?</Link>
+          </div>
 
           <div className="divider">Quick Access</div>
 
