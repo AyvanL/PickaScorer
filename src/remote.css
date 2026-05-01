@@ -1,15 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700;900&display=swap');
 
 .remote-page {
-  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   min-height: 100vh;
-  position: relative;
   background:
     radial-gradient(900px 500px at 50% 0%, rgba(153, 204, 51, 0.08), transparent 55%),
     linear-gradient(180deg, #121212 0%, #0b0b0b 100%);
   color: #f1f1f1;
-  overflow: hidden;
+  overflow: auto;
   font-family: 'Lexend', sans-serif;
+  box-sizing: border-box;
+  z-index: 4;
 }
 
 .back-link {
@@ -27,9 +32,9 @@
 }
 
 .remote-shell {
-  width: min(520px, calc(100% - 32px));
+  width: min(920px, 100%);
   margin: 0 auto;
-  padding: 64px 0 28px;
+  padding: 100px 24px 28px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -272,7 +277,7 @@
 @media (max-width: 560px) {
   .remote-shell {
     width: min(100%, calc(100% - 24px));
-    padding-top: 62px;
+    padding-top: 82px;
   }
 
   .remote-header {

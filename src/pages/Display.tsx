@@ -9,6 +9,7 @@ export default function Display() {
   const [serverNumber, setServerNumber] = useState(1)
   const [servingTeam, setServingTeam] = useState<1 | 2>(1)
   const [userEmail, setUserEmail] = useState('')
+  const [isFullscreen, setIsFullscreen] = useState(false)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -64,8 +65,37 @@ export default function Display() {
     }
   }, [userEmail])
 
+  const handleFullscreen = async () => {
+    try {
+      if (!document.fullscreenElement) {
+        await document.documentElement.requestFullscreen()
+        setIsFullscreen(true)
+      } else {
+        await document.exitFullscreen()
+        setIsFullscreen(false)
+      }
+    } catch (err) {
+      console.error('Fullscreen error:', err)
+    }
+  }
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement)
+    }
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange)
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange)
+    }
+  }, [])
+
   return (
     <div className="display-wrapper">
+      <button className="fullscreen-button" onClick={handleFullscreen} title={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}>
+        {isFullscreen ? '⛶' : '⛶'}
+      </button>
+
       <button className="back-button" onClick={() => navigate('/dashboard')} title="Back to home">
         ← Back
       </button>

@@ -1,14 +1,19 @@
 .dashboard-shell {
-  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   min-height: 100vh;
   align-items: center;
   justify-content: center;
-  padding: 24px;
+  padding: 100px 24px 24px;
   flex-direction: column;
   gap: 0;
   background: linear-gradient(180deg, rgba(10,10,10,0.98), rgba(15,15,15,0.96));
-  position: relative;
+  box-sizing: border-box;
+  z-index: 5;
 }
 
 .dashboard-header {
@@ -72,10 +77,13 @@
   gap: 24px;
   flex: 1;
   justify-content: center;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
 .dashboard-card {
-  width: min(600px, 100%);
+  width: min(900px, 100%);
   border-radius: 12px;
   padding: 28px;
   background: linear-gradient(180deg, rgba(6,6,6,0.98), rgba(10,10,10,0.96));
@@ -103,6 +111,13 @@
   grid-template-columns: 1fr 1fr;
   gap: 32px;
   max-width: 900px;
+}
+
+.button-grid-full { margin: 0 auto; }
+
+/* Make dashboard take full width by removing site padding for this route */
+.site-main {
+  padding: 0 !important;
 }
 
 .dashboard-btn {
