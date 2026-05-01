@@ -5,6 +5,7 @@ import './index.css'
 import App from './App'
 import SignUp from './pages/SignUp'
 import Login from './pages/Login'
+import Homepage from './pages/Homepage'
 import Remote from './pages/Remote'
 import Display from './pages/Display'
 
@@ -16,6 +17,7 @@ createRoot(document.getElementById('root')!).render(
             <Route index element={<Navigate to="/login" replace />} />
           <Route path="signup" element={<SignUp />} />
           <Route path="login" element={<Login />} />
+          <Route path="dashboard" element={<Homepage />} />
           <Route path="remote" element={<Remote />} />
           <Route path="display" element={<Display />} />
         </Route>
