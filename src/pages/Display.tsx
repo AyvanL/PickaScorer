@@ -77,8 +77,11 @@ export default function Display() {
       <div className="status-indicator"></div>
 
       {/* Team 1 Score */}
-      <div className="score-section team1">
-        <div className="large-score">{String(team1Score).padStart(2, '0')}</div>
+      <div className={`score-section team1 ${servingTeam === 1 ? 'is-serving' : ''}`}>
+        <div className="score-box">
+          <div className="team-label">TEAM 1</div>
+          <div className="large-score">{String(team1Score).padStart(2, '0')}</div>
+        </div>
       </div>
 
       {/* Center Section */}
@@ -97,8 +100,11 @@ export default function Display() {
       </div>
 
       {/* Team 2 Score */}
-      <div className="score-section team2">
-        <div className="large-score">{String(team2Score).padStart(2, '0')}</div>
+      <div className={`score-section team2 ${servingTeam === 2 ? 'is-serving' : ''}`}>
+        <div className="score-box">
+          <div className="team-label">TEAM 2</div>
+          <div className="large-score">{String(team2Score).padStart(2, '0')}</div>
+        </div>
       </div>
     </div>
   )

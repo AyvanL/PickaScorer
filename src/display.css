@@ -92,24 +92,58 @@
   border: none;
   aspect-ratio: auto;
   height: 100%;
+  transition: all 300ms ease;
 }
 
 .score-section.team1 {
   text-align: right;
+  padding-right: 40px;
 }
 
 .score-section.team2 {
   text-align: left;
+  padding-left: 40px;
+}
+
+.score-box {
+  background: rgba(100, 100, 100, 0.15);
+  border: 2px solid rgba(180, 180, 180, 0.4);
+  border-radius: 16px;
+  padding: 32px 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  transition: all 300ms ease;
+}
+
+.score-section.is-serving .score-box {
+  border-color: #99CC33;
+  background: rgba(153, 204, 51, 0.1);
+  box-shadow: 0 0 40px rgba(153, 204, 51, 0.4);
+}
+
+.score-section.is-serving .large-score {
+  color: #99CC33;
+  text-shadow: 0 0 20px rgba(153, 204, 51, 0.6);
+}
+
+.team-label {
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: #FFFFFF;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-family: 'Lexend', sans-serif;
 }
 
 .large-score {
-  font-size: clamp(100px, 30vw, 280px);
+  font-size: clamp(80px, 20vw, 200px);
   font-weight: 900;
-  color: #99CC33;
+  color: #FFFFFF;
   font-family: 'Lexend', sans-serif;
-  letter-spacing: -12px;
+  letter-spacing: -8px;
   line-height: 1;
-  text-shadow: 0 0 40px rgba(153, 204, 51, 0.5);
 }
 
 .center-section {
