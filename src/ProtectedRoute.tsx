@@ -14,7 +14,8 @@ export default function ProtectedRoute({ children }: { children: React.ReactNode
     void checkAuth()
 
     // Listen for auth changes
-    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+    const { data: authListener } = supabase.auth.onAuthStateChange((...args) => {
+      const session = args[1]
       setIsAuthenticated(!!session)
     })
 
