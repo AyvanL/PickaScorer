@@ -50,10 +50,36 @@ export default function Remote() {
       }
 
       setUserEmail(email)
+      
+      // Load the match state from database
+      await loadMatchState(email)
     }
 
     void loadUserEmail()
   }, [])
+
+  async function loadMatchState(email: string) {
+    const { data, error: fetchError } = await supabase
+      .from('matches')
+      .select('team1_score, team2_score, server_number, serving_team')
+      .eq('user_id', email)
+      .single()
+
+    if (fetchError) {
+      setError(fetchError.message)
+      return
+    }
+
+    if (data) {
+      const loadedState: MatchState = {
+        team1_score: data.team1_score || 0,
+        team2_score: data.team2_score || 0,
+        server_number: data.server_number || 1,
+        serving_team: data.serving_team || 1,
+      }
+      setMatchState(loadedState)
+    }
+  }
 
   async function saveMatchState(nextState: MatchState) {
     if (!userEmail) {
