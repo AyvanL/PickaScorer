@@ -8,7 +8,7 @@
   min-height: 100vh;
   align-items: center;
   justify-content: center;
-  padding: 100px 24px 24px;
+  padding: 100px 0 24px;
   flex-direction: column;
   gap: 0;
   background: linear-gradient(180deg, rgba(10,10,10,0.98), rgba(15,15,15,0.96));
@@ -24,7 +24,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 32px;
+  padding: 20px 24px;
   border-bottom: 1px solid rgba(153, 204, 51, 0.1);
   background: linear-gradient(180deg, rgba(18,18,18,0.8), rgba(18,18,18,0.4));
   backdrop-filter: blur(8px);
@@ -78,9 +78,11 @@
   gap: 24px;
   flex: 1;
   width: 100%;
-  max-width: 1100px;
+  max-width: 960px;
   margin: 0 auto;
   padding: 0 24px;
+  box-sizing: border-box;
+  text-align: center;
 }
 
 .dashboard-card {
@@ -112,9 +114,10 @@
   grid-template-columns: 1fr 1fr;
   gap: 32px;
   max-width: 900px;
+  width: 100%;
+  justify-items: center;
+  margin: 0 auto;
 }
-
-.button-grid-full { margin: 0 auto; }
 
 /* Make dashboard take full width by removing site padding for this route */
 .site-main {
@@ -136,6 +139,8 @@
   min-height: 240px;
   backdrop-filter: blur(10px);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 420px;
 }
 
 .dashboard-btn:hover {
