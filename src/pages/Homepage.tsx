@@ -30,17 +30,15 @@ export default function Homepage() {
           <div className="logo-bubble">P</div>
           <div className="brand-text">PickaScorer</div>
         </div>
-        <button className="logout-btn" onClick={handleLogout} title="Sign out">
-          ↗ Logout
-        </button>
-      </div>
-
-      {/* User info */}
-      {!loading && userEmail && (
-        <div className="user-info">
-          <span className="user-email">{userEmail}</span>
+        <div className="header-right">
+          {!loading && userEmail && (
+            <span className="user-email">{userEmail}</span>
+          )}
+          <button className="logout-btn" onClick={handleLogout} title="Sign out">
+            ↗ Logout
+          </button>
         </div>
-      )}
+      </div>
 
       {/* Main content */}
       <div className="dashboard-content">
