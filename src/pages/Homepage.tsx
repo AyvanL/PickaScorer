@@ -31,9 +31,7 @@ export default function Homepage() {
           <div className="brand-text">PickaScorer</div>
         </div>
         <div className="header-right">
-          {!loading && userEmail && (
-            <span className="user-email">{userEmail}</span>
-          )}
+          
           <button className="logout-btn" onClick={handleLogout} title="Sign out">
             ↗ Logout
           </button>
@@ -58,6 +56,9 @@ export default function Homepage() {
             <div className="btn-desc">Control match scoring</div>
           </button>
         </div>
+        {!loading && userEmail && (
+            <span className="user-email">{userEmail}</span>
+          )}
       </div>
     </div>
   )

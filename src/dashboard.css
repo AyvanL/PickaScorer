@@ -149,6 +149,72 @@
   font-size: 56px;
 }
 
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+  .dashboard-shell {
+    padding: 80px 16px 16px;
+    gap: 0;
+  }
+
+  .dashboard-header {
+    padding: 16px 16px;
+  }
+
+  .brand-text {
+    font-size: 16px;
+  }
+
+  .logout-btn {
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+
+  .header-right {
+    gap: 12px;
+  }
+
+  .user-email {
+    font-size: 12px;
+  }
+
+  .dashboard-content {
+    gap: 16px;
+  }
+
+  .dashboard-title {
+    font-size: 24px;
+  }
+
+  .dashboard-sub {
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
+  .button-grid-full {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    max-width: 100%;
+  }
+
+  .dashboard-btn {
+    padding: 28px;
+    min-height: 180px;
+    gap: 12px;
+  }
+
+  .btn-icon {
+    font-size: 40px;
+  }
+
+  .btn-title {
+    font-size: 18px;
+  }
+
+  .btn-desc {
+    font-size: 12px;
+  }
+}
+
 .btn-title {
   color: #fff;
   font-weight: 700;
