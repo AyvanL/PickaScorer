@@ -261,6 +261,11 @@
   color: #ffb4b4;
 }
 
+.action-button.success {
+  border: 1px solid rgba(153, 204, 51, 0.7);
+  color: #b8e86f;
+}
+
 .save-meta {
   text-align: center;
   color: rgba(241, 241, 241, 0.48);

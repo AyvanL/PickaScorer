@@ -33,6 +33,7 @@ export default function Remote() {
   const [error, setError] = useState('')
   const [lastSavedLabel, setLastSavedLabel] = useState('Not saved yet')
   const historyRef = useRef<MatchState[]>([])
+  const finishChannelRef = useRef<any>(null)
 
   useEffect(() => {
     async function loadUserEmail() {
@@ -58,6 +59,20 @@ export default function Remote() {
 
     void loadUserEmail()
   }, [])
+
+  useEffect(() => {
+    if (!userEmail) {
+      return
+    }
+
+    const finishChannel = supabase.channel(`match-events-${userEmail}`)
+    finishChannel.subscribe()
+    finishChannelRef.current = finishChannel
+
+    return () => {
+      void finishChannel.unsubscribe()
+    }
+  }, [userEmail])
 
   async function loadMatchState(email: string) {
     const { data, error: fetchError } = await supabase
@@ -157,6 +172,52 @@ export default function Remote() {
     commitState(resetState)
   }
 
+  async function handleFinishMatch() {
+    if (!userEmail) {
+      setError('Missing user email. Sign in again to continue.')
+      return
+    }
+
+    const winner = matchState.team1_score > matchState.team2_score ? 1 : matchState.team2_score > matchState.team1_score ? 2 : 0
+    const finalTeam1Score = matchState.team1_score
+    const finalTeam2Score = matchState.team2_score
+
+    setSaving(true)
+    setError('')
+
+    const { error: saveError } = await supabase
+      .from('matches')
+      .update({
+        winner: winner,
+        team1_score: 0,
+        team2_score: 0,
+        server_number: 1,
+        serving_team: 1,
+      })
+      .eq('user_id', userEmail)
+
+    if (saveError) {
+      setError(saveError.message)
+    } else {
+      setLastSavedLabel(new Date().toLocaleTimeString())
+      setMatchState(resetState)
+
+      if (finishChannelRef.current) {
+        void finishChannelRef.current.send({
+          type: 'broadcast',
+          event: 'match_finished',
+          payload: {
+            winner,
+            team1_score: finalTeam1Score,
+            team2_score: finalTeam2Score,
+          },
+        })
+      }
+    }
+
+    setSaving(false)
+  }
+
   return (
     <div className="remote-page">
       <button className="back-link" onClick={() => navigate('/dashboard')}>
@@ -236,6 +297,9 @@ export default function Remote() {
             </button>
             <button className="action-button danger" onClick={handleReset}>
               ⟳ RESET
+            </button>
+            <button className="action-button success" onClick={handleFinishMatch} disabled={saving}>
+              ✓ FINISH MATCH
             </button>
           </div>
 
