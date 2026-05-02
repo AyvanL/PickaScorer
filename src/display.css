@@ -24,6 +24,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: nowrap;
+  align-content: center;
   gap: 0;
   overflow: hidden;
   box-sizing: border-box;
@@ -253,6 +255,7 @@ body {
   align-items: center;
   justify-content: center;
   flex: 1 1 0;
+  min-width: 280px;
   background: transparent;
   border-radius: 0;
   padding: 0;
@@ -320,7 +323,7 @@ body {
   justify-content: center;
   gap: 40px;
   z-index: 10;
-  flex: 0 0 auto;
+  flex: 0 1 260px;
   margin: 0 24px;
 }
 
@@ -379,7 +382,60 @@ body {
 
 
 /* Responsive for smaller screens */
+@media (min-width: 1025px) and (max-width: 1399px) {
+  .display-wrapper {
+    padding: 0 28px;
+    gap: 12px;
+  }
+
+  .score-section {
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: 0;
+  }
+
+  .score-box {
+    width: min(100%, 320px);
+    padding: 34px 36px;
+    gap: 16px;
+  }
+
+  .center-section {
+    flex: 0 0 210px;
+    margin: 0 12px;
+    gap: 22px;
+  }
+
+  .server-box {
+    padding: 24px 28px;
+  }
+
+  .large-score {
+    font-size: clamp(84px, 12vw, 180px);
+  }
+
+  .server-number {
+    font-size: clamp(72px, 9vw, 140px);
+  }
+}
+
 @media (max-width: 1024px) {
+  .display-wrapper {
+    justify-content: center;
+    gap: 18px;
+    padding: 80px 24px 24px;
+  }
+
+  .score-section {
+    flex: 1 1 320px;
+    min-height: 240px;
+  }
+
+  .score-box {
+    width: min(100%, 420px);
+    padding: 34px 42px;
+  }
+
   .large-score {
     font-size: clamp(80px, 22vw, 200px);
   }
@@ -389,20 +445,46 @@ body {
   }
 
   .center-section {
-    gap: 30px;
+    flex: 1 1 100%;
+    margin: 0;
+    gap: 24px;
+  }
+
+  .server-box {
+    padding: 28px 36px;
   }
 }
 
 @media (max-width: 768px) {
   .display-wrapper {
     flex-direction: column;
-    justify-content: flex-start;
-    padding-top: 80px;
+    justify-content: center;
+    align-items: center;
+    padding: 72px 20px 20px;
+    gap: 18px;
   }
 
   .score-section {
-    flex: 1;
-    min-height: 200px;
+    flex: 0 1 auto;
+    width: 100%;
+    min-width: 0;
+    min-height: 180px;
+  }
+
+  .score-box {
+    width: min(100%, 360px);
+    padding: 24px 28px;
+  }
+
+  .center-section {
+    width: 100%;
+    margin: 0;
+    gap: 18px;
+  }
+
+  .server-box {
+    width: min(100%, 360px);
+    padding: 22px 28px;
   }
 
   .large-score {
@@ -424,7 +506,30 @@ body {
 
 @media (max-width: 480px) {
   .display-wrapper {
-    padding-top: 70px;
+    justify-content: center;
+    padding: 68px 12px 12px;
+    gap: 14px;
+  }
+
+  .score-section {
+    min-height: 0;
+  }
+
+  .score-box {
+    width: 100%;
+    padding: 18px 14px;
+    border-radius: 12px;
+    gap: 14px;
+  }
+
+  .center-section {
+    gap: 14px;
+  }
+
+  .server-box {
+    width: 100%;
+    padding: 16px 18px;
+    border-radius: 12px;
   }
 
   .large-score {
