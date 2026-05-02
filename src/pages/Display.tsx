@@ -169,6 +169,17 @@ export default function Display() {
     }
   }, [])
 
+  useEffect(() => {
+    if (!showWinnerModal) return
+
+    const timer = setTimeout(() => {
+      setShowWinnerModal(false)
+      setModalFinalScore(null)
+    }, 5000)
+
+    return () => clearTimeout(timer)
+  }, [showWinnerModal])
+
   return (
     <div
       className="display-wrapper"
@@ -237,34 +248,17 @@ export default function Display() {
             background: 'linear-gradient(180deg, rgba(6,6,6,0.98), rgba(10,10,10,0.96))',
             border: '2px solid #99CC33',
             borderRadius: '16px',
-            padding: '40px',
+            padding: '60px',
             textAlign: 'center',
-            maxWidth: '500px',
-            boxShadow: '0 20px 60px rgba(153,204,51,0.3)',
+            maxWidth: '800px',
+            width: '90%',
+            boxShadow: '0 30px 90px rgba(153,204,51,0.35)',
           }}>
-            <div style={{ fontSize: '48px', marginBottom: '20px' }}>🎉</div>
-            <h2 style={{ color: '#99CC33', fontSize: '32px', marginBottom: '12px', fontWeight: '700' }}>TEAM {winner} WINS!</h2>
-            <p style={{ color: '#a6a6a6', fontSize: '18px', marginBottom: '30px' }}>
+            <div style={{ fontSize: '84px', marginBottom: '16px' }}>🎉</div>
+            <h2 style={{ color: '#99CC33', fontSize: '48px', marginBottom: '12px', fontWeight: '800' }}>TEAM {winner} WINS!</h2>
+            <p style={{ color: '#a6a6a6', fontSize: '22px', marginBottom: '20px' }}>
               Final Score: Team 1: {String(modalFinalScore?.team1 ?? team1Score).padStart(2, '0')} - Team 2: {String(modalFinalScore?.team2 ?? team2Score).padStart(2, '0')}
             </p>
-            <button
-              onClick={() => {
-                setShowWinnerModal(false)
-                setModalFinalScore(null)
-              }}
-              style={{
-                padding: '12px 32px',
-                background: 'linear-gradient(90deg, #99CC33, #8cc41e)',
-                color: '#fff',
-                border: 'none',
-                borderRadius: '8px',
-                cursor: 'pointer',
-                fontWeight: '700',
-                fontSize: '16px',
-              }}
-            >
-              OK
-            </button>
           </div>
         </div>
       )}
