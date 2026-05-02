@@ -12,7 +12,8 @@ type MatchState = {
 
 const initialState: MatchState = {
   team1_score: 0,
-  team2_score: 0,
+  team2_score: 0
+  ,
   server_number: 1,
   serving_team: 1,
 }
