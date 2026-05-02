@@ -197,6 +197,7 @@ export default function Remote() {
     commitState({
       ...matchState,
       serving_team: team,
+      server_number: 1,
     })
   }
 
