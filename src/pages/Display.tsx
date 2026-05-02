@@ -33,20 +33,63 @@ export default function Display() {
 
       const email = userData.user.email
       setUserEmail(email)
-
-      const { data: matchData, error: matchError } = await supabase
+      // Load all rows for this user to detect duplicates and ensure a single source of truth
+      const { data: rows, error: queryError } = await supabase
         .from('matches')
-        .select('team1_score, team2_score, server_number, serving_team, winner')
+        .select('id, team1_score, team2_score, server_number, serving_team, winner')
         .eq('user_id', email)
-        .single()
 
-      if (!matchError && matchData) {
-        setTeam1Score(matchData.team1_score)
-        setTeam2Score(matchData.team2_score)
-        setServerNumber(matchData.server_number)
-        setServingTeam(matchData.serving_team)
-        setWinner(matchData.winner)
+      if (queryError) {
+        console.error('Error querying matches:', queryError)
+        return
       }
+
+      if (!rows || rows.length === 0) {
+        // no row exists — create one
+        const { data: insertData, error: insertError } = await supabase
+          .from('matches')
+          .insert([
+            {
+              user_id: email,
+              team1_score: 0,
+              team2_score: 0,
+              server_number: 1,
+              serving_team: 1,
+            },
+          ])
+          .select()
+
+        if (insertError) {
+          console.error('Error creating matches row:', insertError)
+          return
+        }
+
+        const row = Array.isArray(insertData) ? insertData[0] : insertData
+        setTeam1Score(row.team1_score)
+        setTeam2Score(row.team2_score)
+        setServerNumber(row.server_number)
+        setServingTeam(row.serving_team)
+        setWinner(row.winner)
+        return
+      }
+
+      // If multiple rows exist, delete duplicates (keep the first)
+      if (rows.length > 1) {
+        try {
+          const idsToDelete = rows.slice(1).map((r: any) => r.id)
+          const { error: deleteError } = await supabase.from('matches').delete().in('id', idsToDelete)
+          if (deleteError) console.error('Failed to delete duplicate match rows:', deleteError)
+        } catch (e) {
+          console.error('Error cleaning duplicates:', e)
+        }
+      }
+
+      const row = Array.isArray(rows) ? rows[0] : rows
+      setTeam1Score(row.team1_score)
+      setTeam2Score(row.team2_score)
+      setServerNumber(row.server_number)
+      setServingTeam(row.serving_team)
+      setWinner(row.winner)
     }
 
     void loadUserAndScores()

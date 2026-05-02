@@ -10,12 +10,74 @@ export default function Homepage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    async function getUserEmail() {
-      const { data } = await supabase.auth.getUser()
-      setUserEmail(data.user?.email || '')
-      setLoading(false)
+    async function getUserEmailAndEnsureMatchesRow() {
+      try {
+        const { data } = await supabase.auth.getUser()
+        const email = data.user?.email || ''
+        
+        if (email) {
+          setUserEmail(email)
+          console.log('Checking/creating matches for email:', email)
+          
+          // Get all rows for this user
+          const { data: allMatches, error: queryError } = await supabase
+            .from('matches')
+            .select('id')
+            .eq('user_id', email)
+          
+          if (queryError) {
+            console.error('Error querying matches:', queryError)
+          }
+          
+          // If multiple rows exist, delete extras and keep one
+          if (allMatches && allMatches.length > 1) {
+            console.log('Found', allMatches.length, 'rows, cleaning up duplicates...')
+            const idsToDelete = allMatches.slice(1).map(m => m.id)
+            
+            const { error: deleteError } = await supabase
+              .from('matches')
+              .delete()
+              .in('id', idsToDelete)
+            
+            if (deleteError) {
+              console.error('Error deleting duplicate rows:', deleteError)
+            } else {
+              console.log('Deleted', idsToDelete.length, 'duplicate rows')
+            }
+          }
+          
+          // If no rows exist, create one
+          if (!allMatches || allMatches.length === 0) {
+            console.log('Creating new matches row for:', email)
+            const { data: insertData, error: insertError } = await supabase
+              .from('matches')
+              .insert([
+                {
+                  user_id: email,
+                  team1_score: 0,
+                  team2_score: 0,
+                  server_number: 1,
+                  serving_team: 1,
+                },
+              ])
+              .select()
+            
+            if (insertError) {
+              console.error('Error creating matches row:', insertError.message, insertError.details)
+            } else {
+              console.log('Matches row created successfully:', insertData)
+            }
+          } else {
+            console.log('Matches row already exists for user')
+          }
+        }
+      } catch (error) {
+        console.error('Error in getUserEmailAndEnsureMatchesRow:', error)
+      } finally {
+        setLoading(false)
+      }
     }
-    void getUserEmail()
+    void getUserEmailAndEnsureMatchesRow()
   }, [])
 
   async function handleLogout() {

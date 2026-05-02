@@ -75,23 +75,66 @@ export default function Remote() {
   }, [userEmail])
 
   async function loadMatchState(email: string) {
+    // Load all rows for the user to detect duplicates
     const { data, error: fetchError } = await supabase
       .from('matches')
-      .select('team1_score, team2_score, server_number, serving_team')
+      .select('id, team1_score, team2_score, server_number, serving_team')
       .eq('user_id', email)
-      .single()
 
     if (fetchError) {
       setError(fetchError.message)
       return
     }
 
-    if (data) {
+    // If no rows, create an initial row
+    if (!data || data.length === 0) {
+      const { data: insertData, error: insertError } = await supabase
+        .from('matches')
+        .insert([
+          {
+            user_id: email,
+            team1_score: 0,
+            team2_score: 0,
+            server_number: 1,
+            serving_team: 1,
+          },
+        ])
+        .select()
+
+      if (insertError) {
+        setError(insertError.message)
+        return
+      }
+
+      const row = Array.isArray(insertData) ? insertData[0] : insertData
       const loadedState: MatchState = {
-        team1_score: data.team1_score || 0,
-        team2_score: data.team2_score || 0,
-        server_number: data.server_number || 1,
-        serving_team: data.serving_team || 1,
+        team1_score: row.team1_score || 0,
+        team2_score: row.team2_score || 0,
+        server_number: row.server_number || 1,
+        serving_team: row.serving_team || 1,
+      }
+      setMatchState(loadedState)
+      return
+    }
+
+    // If multiple rows exist, delete extras (keep the first)
+    if (data.length > 1) {
+      try {
+        const idsToDelete = data.slice(1).map((r: any) => r.id)
+        const { error: deleteError } = await supabase.from('matches').delete().in('id', idsToDelete)
+        if (deleteError) console.error('Failed to delete duplicate match rows:', deleteError)
+      } catch (e) {
+        console.error('Error cleaning duplicate match rows', e)
+      }
+    }
+
+    const row = Array.isArray(data) ? data[0] : data
+    if (row) {
+      const loadedState: MatchState = {
+        team1_score: row.team1_score || 0,
+        team2_score: row.team2_score || 0,
+        server_number: row.server_number || 1,
+        serving_team: row.serving_team || 1,
       }
       setMatchState(loadedState)
     }
