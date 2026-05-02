@@ -21,6 +21,7 @@ export default function Display() {
   const [showWinnerModal, setShowWinnerModal] = useState(false)
   const [modalFinalScore, setModalFinalScore] = useState<{ team1: number; team2: number } | null>(null)
   const navigate = useNavigate()
+  const [isModalFading, setIsModalFading] = useState(false)
 
   useEffect(() => {
     async function loadUserAndScores() {
@@ -180,6 +181,20 @@ export default function Display() {
     return () => clearTimeout(timer)
   }, [showWinnerModal])
 
+  useEffect(() => {
+    if (!showWinnerModal) {
+      setIsModalFading(false)
+      return
+    }
+
+    // Start fade at 4 seconds
+    const fadeTimer = setTimeout(() => {
+      setIsModalFading(true)
+    }, 4000)
+
+    return () => clearTimeout(fadeTimer)
+  }, [showWinnerModal])
+
   return (
     <div
       className="display-wrapper"
@@ -253,6 +268,7 @@ export default function Display() {
             maxWidth: '800px',
             width: '90%',
             boxShadow: '0 30px 90px rgba(153,204,51,0.35)',
+            animation: `slideInLeftToRight 0.6s ease-out${isModalFading ? `, fadeOutModal 1s ease-out 4s forwards` : ''}`,
           }}>
             <div style={{ fontSize: '84px', marginBottom: '16px' }}>🎉</div>
             <h2 style={{ color: '#99CC33', fontSize: '48px', marginBottom: '12px', fontWeight: '800' }}>TEAM {winner} WINS!</h2>

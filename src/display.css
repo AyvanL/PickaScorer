@@ -227,6 +227,26 @@ body {
   50% { opacity: 0.5; }
 }
 
+@keyframes slideInLeftToRight {
+  0% {
+    transform: translateX(-100vw);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOutModal {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 /* Scoreboard layout */
 .score-section {
   display: flex;
